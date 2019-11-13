@@ -35,3 +35,23 @@ void insertBlock(tBoard tab, tBlockTypes blockTypes, const int type, int rotatio
 		}
 	}
 }
+
+void keyInput(int& startColumn, int& rotation, const int l) {
+	char input = 'w';
+	switch (input) {
+	case 'a': 
+		if (startColumn+l < colCount) startColumn++;
+		break;
+	case 's':
+		if (startColumn > 0) startColumn--;
+		break;
+	case 'q':
+		rotation > 0 ? rotation--: rotation = 3;
+		break;
+	case 'w':
+		rotation < 3 ? rotation++ : rotation = 0;
+		break;
+	default:
+		break;
+	}
+};

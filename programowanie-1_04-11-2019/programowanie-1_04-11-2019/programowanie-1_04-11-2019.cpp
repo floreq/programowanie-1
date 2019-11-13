@@ -94,12 +94,15 @@ int main()
 			}
 		},
 	};
+	
+	int startColumn = 2;
+	int rotation = 0;
 	for (int i = 0; i < 16; i++) {
-		clearBoard(tab);
-		insertBlock(tab, blockTypes, 1, 0, i, 1, 4);
+		insertBlock(tab, blockTypes, 1, rotation, i, startColumn);
 		showBoard(tab);
-
-		Sleep(1000);
+		clearBoard(tab);
+		keyInput(startColumn, rotation);
+		Sleep(600);
 		system("cls");
 	}
 	system("pause");
