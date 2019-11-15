@@ -15,7 +15,7 @@ void clearBoard(tBoard tab);
 // rotation
 // iRow/iColumn - punkt startu wpisywania do planszy
 // l - dlugosc tablicy bloku
-void insertBlock(tBoard tab, tBlockTypes blockTypes, const int type, int rotation, int iRow, int& iColumn, int& newIColumn, const int l = tBlockLenght);
+void insertBlock(tBoard tab, tBlockTypes blockTypes, const int type, int rotation, int& iRow, int& newIRow, int& iColumn, int& newIColumn, const int l = tBlockLenght);
 // startColumn - pozycja gdzie wpisac klocek
 // rotation
 // l - dlugosc tablicy bloku

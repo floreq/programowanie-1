@@ -28,29 +28,48 @@ void clearBoard(tBoard tab) {
 	}
 }
 
-void insertBlock(tBoard tab, tBlockTypes blockTypes, const int type, int rotation, int iRow, int& iColumn, int& newIColumn, const int l) {
-	int canMove = iColumn == newIColumn ? 0 : 1; // Jezeli iColumn jest rowne newIColumn to nie ma potrzeby wykonywac sprawdzania
+void insertBlock(tBoard tab, tBlockTypes blockTypes, const int type, int rotation, int& iRow, int& newIRow, int& iColumn, int& newIColumn, const int l) {
+	int canMoveHorizontal = iColumn == newIColumn ? 0 : 1; // Jezeli iColumn jest rowne newIColumn to nie ma potrzeby wykonywac sprawdzania
 	int i = 0;
-	while (canMove == 1 && i < l) {
+	while (canMoveHorizontal == 1 && i < l) {
 		for (int n = 0; n < l; n++) {
 			int bCell = blockTypes[type][rotation][i][n];
 			int boardCell = tab[i + iRow][n + newIColumn];
 			if (bCell != 0 && boardCell >= 5) {
-				canMove = 0;
+				canMoveHorizontal = 0;
 				newIColumn = iColumn;
 				break;
 			}
 		}
 		i++;
 	}
-	if (canMove == 1) {
+	if (canMoveHorizontal == 1) {
 		iColumn = newIColumn;
 	}
+
+	int canMoveVertical = 1;
+	i = 0;
+	while (canMoveVertical == 1 && i < l) {
+		for (int n = 0; n < l; n++) {
+			int bCell = blockTypes[type][rotation][i][n];
+			int boardCell = tab[i + newIRow][n + iColumn];
+			if (bCell != 0 && boardCell >= 5) {
+				canMoveVertical = 0;
+				newIRow = iRow;
+				break;
+			}
+		}
+		i++;
+	}
+	if (canMoveVertical == 1) {
+		iRow = newIRow;
+	}
+
 	for (int i = 0; i < l; i++) {
 		for (int n = 0; n < l; n++) {
 			int bCell = blockTypes[type][rotation][i][n];
 			if (bCell != 0) {
-				tab[i + iRow][n + iColumn] = bCell;
+				tab[i + iRow][n + iColumn] = canMoveVertical == 1 ? bCell : 5;
 			}
 		}
 	}
@@ -62,7 +81,7 @@ void keyInput(int& startColumn, int& rotation, const int l) {
 	if (_kbhit()) {
 		input = _getch(); // Wpisanie wcisnietego klawisza
 	}
-	// Przypisanie operacji klawiszy
+	// Przypisanie operacji klawiszom
 	switch (input) {
 	case 'a':
 		if (startColumn > 0) startColumn--;
